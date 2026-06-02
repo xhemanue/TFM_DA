@@ -3,6 +3,25 @@
 > Trabajo Fin de Máster · Data Analytics
 > Pipeline end-to-end: ingesta → limpieza → EDA → dashboard.
 
+## Contexto académico
+
+Este proyecto constituye el Trabajo Fin de Máster del programa de Data Analytics.
+El proyecto consiste en desarrollar un pipeline de datos de extremo a extremo sobre un
+caso de análisis libre, partiendo de cero, que demuestre el dominio de la ingesta,
+limpieza, fusión, análisis estadístico y visualización de datos.
+
+### Requisitos y cumplimiento
+
+| Requisitos | Cómo lo cumple este proyecto |
+|---|---|
+| Mínimo 2 fuentes de datos en bruto, de canales distintos | DGT (microdatos del parque) + INE (Atlas de Renta) |
+| Fusión mediante llave común | Código INE de municipio (5 dígitos) |
+| Mínimo 50.000 filas y 20 columnas tras la fusión | 6.613.034 filas × 54 columnas |
+| Variables numéricas, categóricas y temporales | Presentes (potencia, marca, fecha de matriculación…) |
+| Pipeline completo: ETL → EDA → dashboard → informe | Estructurado en notebooks por fase + dashboard + informe |
+| Tecnologías: Python/Pandas, Power BI, GitHub | Empleadas según se exige |
+
+
 ---
 
 ## 1. Resumen del proyecto
@@ -26,7 +45,7 @@ renta del territorio, a nivel municipal, en las 5 provincias con mayor parque de
 ## 3. Estructura del repositorio
 
 ```
-TFM/
+TFM_DA/
 ├── data/
 │   ├── raw/          Fuentes originales (intocables)
 │   └── processed/    Datasets generados por el pipeline (Parquet)
