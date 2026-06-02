@@ -1,0 +1,16 @@
+# Núcleo de análisis de datos
+pandas>=2.0
+numpy>=1.24
+pyarrow>=14.0        # soporte Parquet
+
+# Lectura de ficheros del INE
+xlrd>=2.0.1          # ficheros .xls antiguos (códigos de provincia)
+openpyxl>=3.1        # ficheros .xlsx
+
+# Visualización en notebooks (EDA)
+matplotlib>=3.7
+seaborn>=0.12
+
+# Utilidades
+jupyter>=1.0
+ipykernel>=6.0
