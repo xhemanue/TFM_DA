@@ -11,5 +11,6 @@ data/processed/*.parquet
 
 # Ignoramos src/ temporalmente: el código aún no es definitivo.
 # Se liberará cuando los módulos estén terminados.
-src/*
-
+src/sp*
+prueba.py
+notebooks/temp
