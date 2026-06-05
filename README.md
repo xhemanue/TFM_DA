@@ -77,6 +77,7 @@ TFM_DA/
 ├── notebooks/
 │   ├── 01_adquisicion_integracion.ipynb
 │   └── 02_limpieza_etl.ipynb
+│   └── 03_eda.ipynb
 ├── src/              Funciones reutilizables
 │   ├── tfm_io.py        (carga/guardado de fuentes)
 │   ├── tfm_limpieza.py  (estandarización, nulos)
@@ -165,7 +166,7 @@ Variables derivadas en el *feature engineering*: `anio_matriculacion`, `antigued
 |---|---|---|
 | 0. Adquisición e integración | `01_adquisicion_integracion.ipynb` | ✅ Completada |
 | 1. Limpieza / ETL + Feature Engineering | `02_limpieza_etl.ipynb` | ✅ Completada |
-| 2. EDA | `03_eda.ipynb` | ⏳ Pendiente |
+| 2. EDA | `03_eda.ipynb` | ✅ Completada |
 | 3. Análisis estadístico | `04_analisis_estadistico.ipynb` | ⏳ Pendiente |
 | 4. Dashboard | `dashboard/*.pbix` | ⏳ Pendiente |
 | 5. Informe ejecutivo | `reports/` | ⏳ Pendiente |
@@ -185,6 +186,7 @@ pip install -r requirements.txt
 # 4. Ejecutar los notebooks en orden:
 #    01_adquisicion_integracion.ipynb  -> genera dataset_fusionado.parquet
 #    02_limpieza_etl.ipynb             -> genera dataset_procesado.parquet
+#    03_eda.ipynb                      -> exploración y limpieza (no genera datos)
 ```
 
 > Los ficheros de datos pesados no se versionan en GitHub (el subconjunto DGT supera el

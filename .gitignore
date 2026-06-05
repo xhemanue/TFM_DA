@@ -8,9 +8,12 @@ data/raw/*.xls
 data/raw/*.parquet
 
 data/processed/*.parquet
+data/processed/powerbi*.*
 
 # Ignoramos src/ temporalmente: el código aún no es definitivo.
 # Se liberará cuando los módulos estén terminados.
 src/sp*
 prueba.py
 notebooks/temp
+04_analisis_estadistico.ipynb
+src/tfm_vis.py
