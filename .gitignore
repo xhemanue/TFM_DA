@@ -9,6 +9,7 @@ data/raw/*.parquet
 
 data/processed/*.parquet
 data/processed/powerbi*.*
+data/processed/dgt_top*
 
 # Ignoramos src/ temporalmente: el código aún no es definitivo.
 # Se liberará cuando los módulos estén terminados.

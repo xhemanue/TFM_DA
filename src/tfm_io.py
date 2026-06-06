@@ -7,6 +7,57 @@ de los datasets procesados, para que los notebooks queden limpios.
 import pandas as pd
 from pathlib import Path
 
+def cargar_csv(ruta, descripcion="CSV", **kwargs):
+    """
+    Lee un CSV de forma segura: verifica la ruta y envuelve la lectura en
+    try/except con SystemExit (evita un traceback largo en el notebook).
+    Los parámetros de pandas (sep, encoding, usecols, dtype, na_values, ...) se
+    reenvían tal cual a pd.read_csv mediante **kwargs.
+
+    Parameters
+    ----------
+    ruta : str | Path
+        Ruta del fichero .csv/.txt a leer.
+    descripcion : str
+        Etiqueta para los mensajes (p. ej. "DGT", "Atlas INE").
+    **kwargs
+        Argumentos reenviados a pandas.read_csv.
+
+    Returns
+    -------
+    pd.DataFrame
+    """
+    ruta = Path(ruta)
+    try:
+        if not ruta.exists():
+            raise FileNotFoundError(f"No se encuentra {ruta.resolve()}")
+        df = pd.read_csv(ruta, **kwargs)
+        print(f"Cargado ({descripcion}): {df.shape[0]:,} filas x {df.shape[1]} columnas")
+        return df
+    except FileNotFoundError as e:
+        raise SystemExit(f"ERROR DE CARGA ({descripcion}): {e}")
+    except Exception as e:
+        raise SystemExit(f"ERROR INESPERADO al leer {ruta.name}: {e}")
+
+
+def cargar_excel(ruta, descripcion="Excel", **kwargs):
+    """
+    Lee un Excel de forma segura (misma lógica defensiva que cargar_csv).
+    Los parámetros de pandas (engine, sheet_name, skiprows, header, names,
+    dtype, ...) se reenvían tal cual a pd.read_excel mediante **kwargs.
+    """
+    ruta = Path(ruta)
+    try:
+        if not ruta.exists():
+            raise FileNotFoundError(f"No se encuentra {ruta.resolve()}")
+        df = pd.read_excel(ruta, **kwargs)
+        print(f"Cargado ({descripcion}): {df.shape[0]:,} filas x {df.shape[1]} columnas")
+        return df
+    except FileNotFoundError as e:
+        raise SystemExit(f"ERROR DE CARGA ({descripcion}): {e}")
+    except Exception as e:
+        raise SystemExit(f"ERROR INESPERADO al leer {ruta.name}: {e}")
+
 def cargar_parquet(nombre_archivo, directorio_base):
     """
     Carga un archivo parquet de forma segura, validando su existencia.
@@ -84,3 +135,5 @@ def guardar_csv_es(df, ruta):
     else:
         size_mb = size_bytes / (1024 ** 2)
         print(f"Guardado: {ruta}  ({len(df):,} filas, {size_mb:.1f} MB)")
+
+        
