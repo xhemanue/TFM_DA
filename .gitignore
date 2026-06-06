@@ -15,5 +15,3 @@ data/processed/powerbi*.*
 src/sp*
 prueba.py
 notebooks/temp
-04_analisis_estadistico.ipynb
-src/tfm_vis.py

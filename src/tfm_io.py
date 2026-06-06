@@ -7,32 +7,6 @@ de los datasets procesados, para que los notebooks queden limpios.
 import pandas as pd
 from pathlib import Path
 
-# Carácter comodín que la DGT usa para "valor desconocido" (¡ en latin-1)
-NA_VALUES_DGT = ["\xa1", ""]
-
-
-def cargar_dgt(ruta, usecols=None):
-    """
-    Lee un fichero de microdatos del parque de vehículos de la DGT.
-
-    Parameters
-    ----------
-    ruta : str | Path
-        Ruta al fichero .txt de la DGT (separado por '|', encoding latin-1).
-    usecols : list[str], opcional
-        Subconjunto de columnas a leer (reduce el uso de memoria).
-
-    Returns
-    -------
-    pd.DataFrame
-        Datos en bruto, todas las columnas como texto (dtype=str).
-    """
-    return pd.read_csv(
-        ruta, sep="|", encoding="latin-1", low_memory=False,
-        dtype=str, na_values=NA_VALUES_DGT, usecols=usecols,
-    )
-
-
 def cargar_parquet(nombre_archivo, directorio_base):
     """
     Carga un archivo parquet de forma segura, validando su existencia.
@@ -74,6 +48,39 @@ def guardar_parquet(df, ruta):
     ruta = Path(ruta)
     ruta.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(ruta, index=False)
-    size_mb = ruta.stat().st_size / (1024 ** 2)
-    print(f"Guardado: {ruta}  ({len(df):,} filas, {size_mb:.1f} MB)")
+    
+    # Cálculo dinámico del tamaño para mostrar KB o MB
+    size_bytes = ruta.stat().st_size
+    if size_bytes < (1024 ** 2):
+        size_kb = size_bytes / 1024
+        print(f"Guardado: {ruta}  ({len(df):,} filas, {size_kb:.1f} KB)")
+    else:
+        size_mb = size_bytes / (1024 ** 2)
+        print(f"Guardado: {ruta}  ({len(df):,} filas, {size_mb:.1f} MB)")
+ 
+ 
+def guardar_csv_es(df, ruta):
+    """
+    Guarda un DataFrame en CSV con las convenciones españolas para que Excel y
+    Power BI lo lean bien: separador ';', coma decimal y codificación
+    'utf-8-sig' (BOM), de modo que las tildes y la 'ñ' se visualicen correctamente.
 
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Tabla a exportar.
+    ruta : str | Path
+        Ruta de destino del fichero .csv (se crea la carpeta si no existe).
+    """
+    ruta = Path(ruta)
+    ruta.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(ruta, index=False, sep=";", decimal=",", encoding="utf-8-sig")
+    
+    # Cálculo dinámico del tamaño para mostrar KB o MB
+    size_bytes = ruta.stat().st_size
+    if size_bytes < (1024 ** 2):
+        size_kb = size_bytes / 1024
+        print(f"Guardado: {ruta}  ({len(df):,} filas, {size_kb:.1f} KB)")
+    else:
+        size_mb = size_bytes / (1024 ** 2)
+        print(f"Guardado: {ruta}  ({len(df):,} filas, {size_mb:.1f} MB)")
