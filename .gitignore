@@ -2,17 +2,9 @@
 
 __pycache__/
 
-data/raw/*.csv
-data/raw/*.txt 
-data/raw/*.xls
-data/raw/*.parquet
+# Ignoramos los archivos de datos, pero mantenemos el PDF específico y los archivos de Power BI que necesitamos
+data/raw/*
+data/processed/*
 
-data/processed/*.parquet
-data/processed/powerbi*.*
-data/processed/dgt_top*
-
-# Ignoramos src/ temporalmente: el código aún no es definitivo.
-# Se liberará cuando los módulos estén terminados.
-src/sp*
-prueba.py
-notebooks/temp
+!data/raw/Interfaz-de-Salida-Fichero-Parque-Anual.pdf
+!data/processed/powerbi_*

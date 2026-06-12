@@ -1,14 +1,13 @@
 # TFM — Análisis del Parque de Vehículos vs. Renta de los Hogares
 
 > Trabajo Fin de Máster · Data Analytics
-> Pipeline end-to-end: ingesta → limpieza → EDA → análisis descriptivo → dashboard → informe.
+> Proceso completo de datos: adquisición → limpieza → EDA → análisis descriptivo → dashboard → informe.
 
 ## Contexto académico
 
 Este proyecto constituye el Trabajo Fin de Máster del programa de Data Analytics.
-Consiste en desarrollar un pipeline de datos de extremo a extremo sobre un caso de
-análisis libre, partiendo de cero, que demuestre el dominio de la ingesta, la limpieza
-profunda, la fusión multifuente, el análisis estadístico y la visualización de datos.
+Consiste en desarrollar un proceso completo de datos sobre un caso de
+análisis libre, partiendo de cero, que demuestre el dominio de la adquisición, la limpieza, la fusión multifuente, el análisis estadístico y la visualización de datos.
 
 ### Requisitos y cumplimiento
 
@@ -59,12 +58,13 @@ TFM_DA/
 │   │   ├── parque_vehiculos_202603.txt
 │   │   ├── 30824.csv
 │   │   ├── codprov.xls
+│   │   ├── Interfaz-de-Salida-Fichero-Parque-Anual.pdf   (diccionario oficial DGT)
 │   │   └── LEEME_fuentes.md
 │   └── processed/    Datasets generados por el pipeline
 │       ├── dgt_top5_turismos_2010_202603.parquet   (subconjunto DGT)
 │       ├── dataset_fusionado.parquet               (salida Fase 0)
 │       ├── dataset_procesado.parquet               (salida Fase 1, dataset final)
-│       └── powerbi_resumen_*.csv / .parquet        (tablas agregadas, salida Fase 3)
+│       └── powerbi_*.csv / .parquet               (tablas de hechos y dimensiones para Power BI, Fase 3)
 ├── notebooks/
 │   ├── 01_adquisicion_integracion.ipynb
 │   ├── 02_limpieza_etl.ipynb
@@ -75,8 +75,10 @@ TFM_DA/
 │   ├── tfm_limpieza.py  (estandarización, nulos)
 │   ├── tfm_eda.py       (perfilado y EDA)
 │   └── tfm_vis.py       (gráficos: barras por segmento y dispersión)
-├── dashboard/        Cuadro de mando (.pbix)
-├── reports/          Informe ejecutivo
+├── dashboard/        
+│   └── tfm_da.pbix       (Cuadro de mando - PowerBI)
+├── reports/         
+│   └── Informe_Analisis_TFM.md       (Informe del análisis de datos)
 ├── requirements.txt
 └── README.md
 ```
@@ -133,8 +135,8 @@ Variables derivadas en el *feature engineering*: `anio_matriculacion`, `antigued
 | 1. Limpieza / ETL + Feature Engineering | `02_limpieza_etl.ipynb` | ✅ Completada |
 | 2. EDA | `03_eda.ipynb` | ✅ Completada |
 | 3. Análisis estadístico descriptivo | `04_analisis_estadistico.ipynb` | ✅ Completada |
-| 4. Dashboard | `dashboard/*.pbix` | ⏳ Pendiente |
-| 5. Informe ejecutivo | `reports/` | ⏳ Pendiente |
+| 4. Dashboard (Power BI) | `dashboard/tfm_da.pbix` | ✅ Completada |
+| 5. Informe del análisis | `reports/Informe_Analisis_TFM.md` | ✅ Completada |
 
 ## 7. Cómo reproducir
 
@@ -167,8 +169,8 @@ Conclusiones del análisis descriptivo. El parque completo de las 5 provincias e
 | :--- | :--- | :--- |
 | **H1** Potencia/cilindrada ↑ con renta | Potencia media \~121→131 CV (sube leve); cilindrada casi plana \~1.480–1.490 cc | Se cumple a medias (potencia sí, cilindrada no) |
 | **H2** Antigüedad ↓ con renta | Media de \~8,5 años (renta muy baja) → \~6,3 años (renta muy alta) | **Se observa con claridad** |
-| **H3** Electrificación ↑ con renta | % de electrificados: \~12,7% (muy baja) → \~31,4% (muy alta); penetración global \~24,6% | **Tendencia muy marcada** |
-| **H4** Marcas *premium* ↑ con renta | % de gama alta: \~15,1% (muy baja) → \~19,5% (muy alta); Audi aparece en top8 de "muy alta" | Tendencia **leve**, emergente |
+| **H3** Electrificación ↑ con renta | % de electrificados: \~12,7% (muy baja) → \~31,4% (muy alta); penetración global \~24% | **Tendencia muy marcada** |
+| **H4** Marcas de gama alta ↑ con renta | % de gama alta: \~15,1% (muy baja) → \~19,5% (muy alta); Audi aparece en top8 de "muy alta" | Tendencia **leve**, emergente |
 | **H5** Renting confunde | Renting: antigüedad \~2,0 años vs. resto \~7,5; potencia \~135 vs. \~126 CV; electrificados \~50% vs. \~21,5% | **Sesgo marcado** requiere control |
 
 **Colinealidad detectada en el EDA:** dos bloques de variables casi redundantes.
@@ -185,4 +187,4 @@ Por eso el análisis usa un único representante de cada bloque (`potencia_cv` y
 * El **renting** introduce sesgo significativo: hay que controlarlo en H2 y H3.
 * El **patrón de marcas** (gama alta concentrada en renta alta) existe pero es débil e ilustrativo, no una etiqueta binaria.
 
-**Próximas fases:** construir el dashboard operativo en Power BI (Fase 4) a partir de las tablas agregadas que genera el notebook de análisis, y redactar el informe ejecutivo (Fase 5) que traduzca estas conclusiones en recomendaciones de negocio.
+**Entregables finales:** el cuadro de mando interactivo en Power BI (`dashboard/tfm_da.pbix`), que permite segmentar los resultados por provincia, año y nivel de renta, y el informe del análisis (`reports/Informe_Analisis_TFM.md`), que recoge y discute los hallazgos.
